@@ -20,6 +20,7 @@ class Eloom_Yapay_NotificationsController extends Mage_Core_Controller_Front_Act
 		if ($data && isset($data['transaction'])) {
 			try {
 				$transaction = $data['transaction'];
+				$this->logger->info(sprintf("Token transaction [%s] Transaction info [%s]", $data['token_transaction'], json_encode($transaction)));
 
 				$this->logger->info(sprintf("Processando notificação. Pedido Yapay [%s] - Status [%s].", $transaction['order_number'], $transaction['status_name']));
 
