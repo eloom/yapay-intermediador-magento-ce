@@ -1,0 +1,85 @@
+# -- A
+"Approved Order Status","Status de Pedidos Aprovados"
+"Billett will be sent to your email.","Um link com o boleto bancário será enviado para seu email."
+
+# -- B
+"Billett Generate","Gerar Boleto"
+
+# -- C
+"Credit Card Type", "Bandeira"
+"CC Number","Número do Cartão"
+"CC Owner","Titular do Cartão"
+"CC Expiry","Validade"
+"CC CVC","Cód. Segurança"
+"Credit Card not allowed.","Não é possível processar pagamentos com cartões de crédito desta bandeira."
+
+# -- D
+"Discount", "Desconto à vista"
+
+# -- E
+"Error","Erro"
+"Environment","Processar pagamento em"
+"Enabled","Habilitado"
+
+# -- G
+"Get Logger","Buscar Log"
+
+# -- L
+"Last Credit Card Number", "Últimos digitos cartão"
+
+# -- I
+"Instructions", "Instruções"
+"Installment no Interest", "Parcelas sem Juros"
+"Installments", "Forma de Pagamento"
+"Interest","Juros"
+
+# -- N
+"New Order Status","Novo Status do Pedido"
+
+# -- M
+"Merchant ID","Merchant ID"
+"Mês/Ano","(Mês/Ano)"
+
+# -- O
+"<strong>ORDER STATUS</strong>","<strong>STATUS DOS PEDIDOS</strong>"
+
+# -- P
+"Your payment was processed by Yapay", "Sua solicitação foi processada com sucesso por Yapay."
+"Your payment status is", "Status do pagamento"
+"Payment from applicable countries","Pagamento para Países Selecionados"
+"Payment from Specific countries","Pagamento para Países Específicos"
+"Public Key","Chave Pública"
+"Pay With", "Pago com"
+"Yapay Order ID", "Pedido na Yapay"
+"Yapay Transaction ID", "Transação na Yapay"
+"Yapay Bar Code", "Código de Barras"
+"Production","Produção"
+"Payment Link","Link de Pagamento"
+"Process Payment","Pagar"
+"Processing...","Processando..."
+
+# -- S
+"Holder CPF", "CPF do Titular"
+"Holder Phone", "Telefone do Titular"
+"Holder Birth Date", "Nascimento do Titular"
+"Holder Another", "Este cartão pertence a outra pessoa."
+"Sort Order", "Ordem"
+"Synchronize","Sincronizar com Yapay"
+
+# -- T
+"Transaction.Status.0","Não Encontrada."
+"Transaction.Status.4","Aguardando Pagamento."
+"Transaction.Status.5","Em Processamento."
+"Transaction.Status.6","Aprovada."
+"Transaction.Status.7","Cancelada."
+"Transaction.Status.24","Em Contestação."
+"Transaction.Status.87","Em Monitoramento."
+"Transaction.Status.89","Reprovada."
+"Test","Teste"
+"The Payment has been updated.","Pagamento sincronizado com sucesso."
+"The Payment has not been updated.","Erro ao sincronizar pagamento."
+"Token","Token"
+
+# -- W
+"When the order has the NEW and IN PROGRESS state type in Magento will put the order in this status.", "Quando o pedido tem o tipo de status NEW e IN PROGRESS na Yapay, a loja definirá este status para o pedido."
+"When the order has the APPROVED status type in Magento will put the order in this status.","Quando o pedido tem o tipo de status APPROVED na Yapay, a loja definirá este status para o pedido."

@@ -1,0 +1,18 @@
+<?php $code = $this->getMethodCode(); ?>
+<ul id="payment_form_<?php echo $code ?>" class="form-list" style="display: none;">
+	<?php if($inst = $this->getInstructions()):?>
+      <li class="note-msg">
+          <ul>
+              <li><span><?php echo $inst; ?></span></li>
+          </ul>
+      </li>
+	<?php endif;?>
+	<input type="hidden" name="payment[yapay_boleto_finger_print]" id="<?php echo $code ?>-yapay-finger-print" />
+</ul>
+
+<script type="text/javascript">
+//<![CDATA[
+  Eloom.Yapay.PaymentBoleto.config = {code: "<?php echo $code ?>", amount: <?php echo $this->getGrandTotal(); ?>};
+  Eloom.Yapay.PaymentBoleto.init();
+//]]>
+</script>

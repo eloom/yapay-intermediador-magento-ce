@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<eloom_yapay translate="title" module="eloom_yapay">
+						<title>Yapay</title>
+						<children>
+							<sinc translate="title" module="eloom_yapay">
+								<title><![CDATA[Synchronize]]></title>
+								<sort_order>0</sort_order>
+							</sinc>
+							<logger translate="title" module="eloom_yapay">
+								<title><![CDATA[Get Logger]]></title>
+								<sort_order>1</sort_order>
+							</logger>
+						</children>
+					</eloom_yapay>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

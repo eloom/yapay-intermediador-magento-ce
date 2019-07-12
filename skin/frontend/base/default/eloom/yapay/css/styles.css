@@ -1,0 +1,41 @@
+input[type=email],
+input[type=search],
+input[type=number],
+input[type=password],
+input[type=tel],
+input[type=text],
+select {
+	width: 100%;
+}
+.eloomyapay-terminal-index #co-payment-form fieldset {
+	-webkit-transition: .4s;
+	-moz-transition: .4s;
+	-o-transition: .4s;
+	-ms-transition: .4s;
+	transition: .4s;
+}
+.eloomyapay-terminal-index #co-payment-form #messages-yapay {
+	display: inline-block;
+}
+.eloomyapay-terminal-index #co-payment-form dt img {
+	float: right;
+}
+.eloomyapay-terminal-index #co-payment-form dd label {
+	display: block;
+}
+.eloomyapay-terminal-index #co-payment-form label.holder-another {
+	display: inline-block;
+}
+.eloomyapay-terminal-index #co-payment-form li.yapay-cc-holder {
+	display: none;
+}
+.eloomyapay-terminal-index #co-payment-form li.yapay-cc-expiry span {
+	margin-left: 10px;
+}
+.eloomyapay-terminal-index #co-payment-form  input.yapay-cc-number {
+	padding-right: 60px;
+	background-repeat: no-repeat;
+	background-position: right center;
+	background-size: 60px;
+}
+

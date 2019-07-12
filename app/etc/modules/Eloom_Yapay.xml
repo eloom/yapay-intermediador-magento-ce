@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Eloom_Yapay>
+      <active>true</active>
+      <codePool>local</codePool>
+      <version>##eloom.versao##</version>
+      <depends>
+        <Mage_Payment />
+        <Ideasa_IdeCheckoutvm />
+      </depends>
+    </Eloom_Yapay>
+  </modules>
+</config>

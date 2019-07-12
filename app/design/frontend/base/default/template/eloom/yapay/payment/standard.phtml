@@ -1,0 +1,14 @@
+<script type="text/javascript">
+//<![CDATA[
+    Eloom.YapayCardTypes.init({mediaUrl: "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA);?>"});
+
+    Eloom.Yapay.config = {installmentsUrl: "<?php echo $this->getUrl('eloomyapay/index/installments', array('_secure' => true)); ?>", logo: "<?php echo $this->getSkinUrl('eloom/yapay/images/logo.png'); ?>"};
+		Eloom.Yapay.Errors.config = eval(<?php echo $this->listJsonErrors(); ?>);
+
+		<?php if($this->isInProduction()):?>
+			window.yapay.FingerPrint();
+		<?php else:?>
+			window.yapay.FingerPrint({ env: 'sandbox' });
+		<?php endif;?>
+//]]>
+</script>
