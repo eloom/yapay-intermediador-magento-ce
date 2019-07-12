@@ -6,35 +6,35 @@ A Yapay é uma empresa de soluções de pagamentos. É uma unidade de negócios 
 
 ## Recursos
 
-- processa pagamentos nos ambientes **Sandbox** e **Produção** da Yapay
+- [x] processa pagamentos nos ambientes **Sandbox** e **Produção** da Yapay
 
-- permite escolher os status de pedido para **novos pedidos** e para **pedidos aprovados**
+- [x] permite escolher os status de pedido para **novos pedidos** e para **pedidos aprovados**
 
-- sincronização automática dos status de pagamento do pedido. A sincronização ocorre no sentido Yapay -> Loja Magento
+- [x] sincronização automática dos status de pagamento do pedido. A sincronização ocorre no sentido Yapay -> Loja Magento
 
-- sincronização manual do pagamento nos detalhes do pedido. A sincronização ocorre no sentido Yapay -> Loja Magento
+- [x] sincronização manual do pagamento nos detalhes do pedido. A sincronização ocorre no sentido Yapay -> Loja Magento
 
 #### Pagamentos com **Cartões de Crédito**
 
-- forma de recebimento por **antecipação** e no **fluxo**
+- [x] forma de recebimento por **antecipação** e no **fluxo**
 
-- desconto à vista
+- [x] desconto à vista
 
-- juros ao mês para recebimentos por **antecipação**
+- [x] juros ao mês para recebimentos por **antecipação**
 
-- instruções ao cliente que são inseridas no checkout
+- [x] instruções ao cliente que são inseridas no checkout
 
-- valor da parcela mínima
+- [x] valor da parcela mínima
 
-- total de parcelas
+- [x] total de parcelas
 
-- total de parcelas sem juros
+- [x] total de parcelas sem juros
  
 #### Pagamentos com **Boleto Bancário**
 
-- instruções ao cliente que são inseridas no checkout
+- [x] instruções ao cliente que são inseridas no checkout
 
-- permite configurar o cancelamento dos pedidos automaticamente por compras realizadas **na sexta-feira**, **no sábado** e **entre domingo e quinta-feira**
+- [x] permite configurar o cancelamento dos pedidos automaticamente por compras realizadas **na sexta-feira**, **no sábado** e **entre domingo e quinta-feira**
 
 #### Pagamentos com **Televendas**
 
