@@ -1,4 +1,4 @@
-# Yapay Intermediador para Magento
+# Yapay Intermediador de Pagamentos para Magento
 
 Este projeto processa pagamento através da Yapay, na opção **Intermediador**.
 
