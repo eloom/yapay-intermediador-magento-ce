@@ -46,7 +46,7 @@ Opção que o lojísta pode gerar o pedido pela administração do Magento. Um l
 ## Dependências
 
 
-O módulo de pagamento Yapay Intermediador para Magento precisa do módulo [Bootstrap para Magento CE](https://github.com/eloom/eloom-bootstrap-magento-ce)
+O módulo de pagamento Yapay Intermediador para Magento precisa do módulo [Bootstrap para Magento CE](https://github.com/eloom/bootstrap-magento-ce)
 
 O módulo de pagamento Yapay Intermediador para Magento funciona apenas no [Checkout para Magento CE](https://github.com/eloom/checkout-magento-ce)
 
