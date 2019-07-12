@@ -8,6 +8,10 @@ A Yapay é uma empresa de soluções de pagamentos. É uma unidade de negócios 
 
 - [x] processa pagamentos nos ambientes **Sandbox** e **Produção** da Yapay
 
+- [x] apresenta os **juros** em bloco separado no review do pedido e da fatura, nas áreas da administração e do cliente
+ 
+- [x] apresenta os **descontos** em bloco separado no review do pedido e da fatura, nas áreas da administração e do cliente 
+
 - [x] permite escolher os status de pedido para **novos pedidos** e para **pedidos aprovados**
 
 - [x] sincronização automática dos status de pagamento do pedido. A sincronização ocorre no sentido Yapay -> Loja Magento
