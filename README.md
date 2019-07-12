@@ -6,7 +6,7 @@ A Yapay é uma empresa de soluções de pagamentos. É uma unidade de negócios 
 
 ## Recursos
 
-- processa pagamentos nos ambientes **teste** e **produção** da Yapay
+- processa pagamentos nos ambientes **Sandbox** e **Produção** da Yapay
 
 - permite escolher os status de pedido para **novos pedidos** e para **pedidos aprovados**
 

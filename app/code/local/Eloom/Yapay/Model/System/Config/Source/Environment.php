@@ -12,7 +12,7 @@ class Eloom_Yapay_Model_System_Config_Source_Environment {
         ),
         array(
             'value' => Eloom_Yapay_Domains_Environment::SANDBOX,
-            'label' => Mage::helper('adminhtml')->__('Test')
+            'label' => Mage::helper('adminhtml')->__('Sandbox')
         )
     );
   }
