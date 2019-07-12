@@ -53,9 +53,9 @@ O módulo de pagamento Yapay Intermediador para Magento funciona apenas no [Chec
 
 ## Compatibilidade
 
-Magento 1.9.3.x
+- [x] Magento 1.9.3.x
 
-PHP/PHP-FPM 5.6
+- [x] PHP/PHP-FPM 5.6
 
 ## Começando
 
