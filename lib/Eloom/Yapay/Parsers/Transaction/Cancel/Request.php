@@ -2,9 +2,9 @@
 
 /**
  * Class Payment
- * @package Yapay\Parsers\Checkout
+ * @package Yapay\Parsers\Transaction\Cancel
  */
-class Eloom_Yapay_Parsers_Transaction_Notification_Request extends Eloom_Yapay_Parsers_Error implements Eloom_Yapay_Parsers_Parser {
+class Eloom_Yapay_Parsers_Transaction_Cancel_Request extends Eloom_Yapay_Parsers_Error implements Eloom_Yapay_Parsers_Parser {
 
 	/**
 	 * @param \Yapay\Resources\Http $http
@@ -15,6 +15,7 @@ class Eloom_Yapay_Parsers_Transaction_Notification_Request extends Eloom_Yapay_P
 		$transaction = $json->data_response->transaction;
 
 		return (new Eloom_Yapay_Parsers_Transaction_Response)
+			->setMessage($json->message_response->message)
 			->setPayment($transaction->payment)
 			->setCustomer($transaction->customer)
 			->setOrderNumber($transaction->order_number)

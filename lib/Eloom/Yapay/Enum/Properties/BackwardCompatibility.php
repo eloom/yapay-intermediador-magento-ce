@@ -271,4 +271,6 @@ class Eloom_Yapay_Enum_Properties_BackwardCompatibility {
 	const PRICE_DISCOUNT = 'price_discount';
 
 	const FREE = 'free';
+
+	const ORDER_NUMBER = 'order_number';
 }

@@ -21,6 +21,8 @@ class Eloom_Yapay_Domains_Transaction {
 
 	private $free;
 
+	private $orderNumber;
+
 	/**
 	 * @return mixed
 	 */
@@ -125,4 +127,20 @@ class Eloom_Yapay_Domains_Transaction {
 		$this->free = $free;
 		return $this;
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getOrderNumber() {
+		return $this->orderNumber;
+	}
+
+	/**
+	 * @param mixed $orderNumber
+	 */
+	public function setOrderNumber($orderNumber) {
+		$this->orderNumber = $orderNumber;
+		return $this;
+	}
+
 }

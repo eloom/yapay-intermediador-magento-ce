@@ -6,8 +6,12 @@
  */
 class Eloom_Yapay_Parsers_Transaction_Response {
 
+	const SUCCESS = 'success';
+
 	use Eloom_Yapay_Parsers_Response_Payment;
 	use Eloom_Yapay_Parsers_Response_Customer;
+
+	public $message;
 
 	public $orderNumber;
 
@@ -109,6 +113,25 @@ class Eloom_Yapay_Parsers_Transaction_Response {
 	public function setTokenTransaction($tokenTransaction) {
 		$this->tokenTransaction = $tokenTransaction;
 		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getMessage() {
+		return $this->message;
+	}
+
+	/**
+	 * @param mixed $message
+	 */
+	public function setMessage($message) {
+		$this->message = $message;
+		return $this;
+	}
+
+	public function isSuccess() {
+		return $this->message == self::SUCCESS;
 	}
 
 

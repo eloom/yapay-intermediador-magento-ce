@@ -20,12 +20,22 @@ class Eloom_Yapay_NotificationsController extends Mage_Core_Controller_Front_Act
 		if ($data && isset($data['transaction'])) {
 			try {
 				$transaction = $data['transaction'];
-				$this->logger->info(sprintf("Token transaction [%s] Transaction info [%s]", $data['token_transaction'], json_encode($transaction)));
+				$this->logger->info(sprintf("Notificação Yapay. Pedido [%s] | Token transaction [%s] | Status [%s]", $transaction['order_number'], $data['token_transaction'], $transaction['status_name']));
 
-				$this->logger->info(sprintf("Processando notificação. Pedido Yapay [%s] - Status [%s].", $transaction['order_number'], $transaction['status_name']));
+				$order = Mage::getModel('sales/order')->loadByIncrementId($transaction['order_number']);
 
-				$parentId = Mage::getModel('sales/order_payment')->load($transaction['order_number'], 'last_trans_id')->getParentId();
-				$order = Mage::getModel('sales/order')->load($parentId);
+				/**
+				 * Conferir se não houve falha no pagamento, na validação de campos
+				 */
+				$tokenTransaction = $order->getPayment()->getTokenTransaction();
+				$lastTransId = $order->getPayment()->getLastTransId();
+
+				if(empty($tokenTransaction) || empty($lastTransId)) {
+					$order->getPayment()->setTokenTransaction($data['token_transaction']);
+					$order->getPayment()->setLastTransId($transaction['transaction_id']);
+
+					$order->getPayment()->save();
+				}
 
 				Mage::getModel('eloom_yapay/transaction_code')->synchronizeTransaction($transaction['seller_token'], $order->getPayment(), $order);
 				$this->getResponse()->setHttpResponseCode(200);

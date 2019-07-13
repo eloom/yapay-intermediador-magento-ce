@@ -9,7 +9,7 @@ trait Eloom_Yapay_Resources_Connection_Base_Transaction_Search {
 	/**
 	 * @return string
 	 */
-	public function buildSearchRequestUrl() {
+	public function buildTransactionSearchRequestUrl() {
 		return Eloom_Yapay_Resources_Builder_Transaction_Search::getSearchRequestUrl();
 	}
 

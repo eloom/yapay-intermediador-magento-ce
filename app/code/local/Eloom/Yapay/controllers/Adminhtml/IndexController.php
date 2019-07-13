@@ -14,7 +14,7 @@ class Eloom_Yapay_Adminhtml_IndexController extends Mage_Adminhtml_Controller_Ac
 
 				$credentials = new Eloom_Yapay_Domains_AccountCredentials();
 				$credentials->setToken($config->getToken());
-				$response = Eloom_Yapay_Services_Transactions_Notification::check($credentials, $order->getPayment()->getTokenTransaction());
+				$response = Eloom_Yapay_Services_Transactions_Search::check($credentials, $order->getPayment()->getTokenTransaction());
 			} catch(Exception $e) {
 				$response = $e->getMessage();
 			}

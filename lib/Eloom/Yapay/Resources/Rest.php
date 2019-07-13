@@ -5,7 +5,7 @@
  *
  * @package Yapay\Resources
  */
-class Eloom_Yapay_Resources_Http {
+class Eloom_Yapay_Resources_Rest {
 
 	/**
 	 *
@@ -122,10 +122,10 @@ class Eloom_Yapay_Resources_Http {
 
 		$options = array(
 			CURLOPT_HTTPHEADER => array(
-				"Content-Type: application/x-www-form-urlencoded; charset=" . $charset,
+				"Content-Type: application/json; charset=" . $charset,
 				$contentLength,
-				'lib-description: élOOm Commerce:' . Eloom_Yapay_Library::libraryVersion(),
-				'language-engine-description: php:' . Eloom_Yapay_Library::phpVersion()
+				'lib-description: élOOm Commerce: ' . Eloom_Yapay_Library::libraryVersion(),
+				'language-engine-description: php: ' . Eloom_Yapay_Library::phpVersion()
 			),
 			CURLOPT_URL => $url,
 			CURLOPT_RETURNTRANSFER => true,

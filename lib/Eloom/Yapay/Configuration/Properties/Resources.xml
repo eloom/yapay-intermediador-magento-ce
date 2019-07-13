@@ -17,7 +17,6 @@
 		<application>
 			<authorization>
 				<request>v2/authorizations/request</request>;
-				<response></response>;
 			</authorization>
 			<search>
 				<request>v2/authorizations</request>
@@ -34,7 +33,7 @@
 				<request></request>
 			</preApproval>
 			<transaction>
-				<request>v3/transactions/get_by_token</request>;
+				<request></request>;
 			</transaction>
 		</notification>
 		<payment>
@@ -48,24 +47,12 @@
 		</session>
 		<transaction>
 			<search>
-				<request></request>
+				<request>v3/transactions/get_by_token</request>
 			</search>
-			<abandoned>
-				<request></request>
-			</abandoned>
-		</transaction>
-		<preApproval>
-			<request></request>
 			<cancel>
-				<request></request>
+				<request>api/v3/transactions/cancel</request>
 			</cancel>
-			<charge>
-				<request></request>
-			</charge>
-			<search>
-				<request></request>
-			</search>
-		</preApproval>
+		</transaction>
 		<directPayment>
 			<request>api/v3/transactions/payment</request>
 		</directPayment>

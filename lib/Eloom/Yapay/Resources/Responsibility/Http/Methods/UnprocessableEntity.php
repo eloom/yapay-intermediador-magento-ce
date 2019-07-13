@@ -30,7 +30,6 @@ class Eloom_Yapay_Resources_Responsibility_Http_Methods_UnprocessableEntity impl
 	public function handler($http, $class) {
 		if ($http->getStatus() == Eloom_Yapay_Enum_Http_Status::UNPROCESSABLE_ENTITY) {
 			$error = $class::error($http);
-
 			$parser = new Eloom_Yapay_Helpers_Json($error->getMessage());
 			$data = $parser->getResult('error_response');
 			$errors = [];

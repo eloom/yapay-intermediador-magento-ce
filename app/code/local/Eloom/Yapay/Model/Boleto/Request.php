@@ -53,6 +53,7 @@ class Eloom_Yapay_Model_Boleto_Request extends Mage_Core_Model_Abstract {
 	  $boleto->setTransaction()->setCustomerIp($order->getRemoteIp());
 	  $boleto->setTransaction()->setPriceDiscount(round(abs($amount), 2));
 	  $boleto->setTransaction()->setFree(sprintf("Pedido %s", $order->getIncrementId()));
+	  $boleto->setTransaction()->setOrderNumber($order->getIncrementId());
 
 	  /* Frete */
 	  $boleto->setTransaction()->setShippingType($order->getShippingDescription());
@@ -101,9 +102,48 @@ class Eloom_Yapay_Model_Boleto_Request extends Mage_Core_Model_Abstract {
 	  $boleto->setBilling()->setAddress()->withParameters('B', substr($billingAddress->getStreet(1), 0, 80), substr($billingAddress->getStreet(2), 0, 20), substr($billingAddress->getStreet(4), 0, 60), $zipCode, $billingAddress->getCity(), $billingAddress->getRegionCode(), $billingAddress->getCountryModel()->getIso3Code(), substr($billingAddress->getStreet(3), 0, 40));
 
 	  $credential = Eloom_Yapay_Configuration_Configure::getAccountCredentials();
-	  $result = $boleto->register($credential);
+	  $response = $boleto->register($credential);
 
-	  return $result;
+	  /* Parse Response */
+	  /* link boleto */
+	  $additionalData = new stdClass();
+	  $additionalData->yapayOrderId = $response->getOrderNumber();
+	  $additionalData->paymentLink = $response->getPayment()->getUrlPayment();
+	  $additionalData->barCode = $response->getPayment()->getLinhaDigitavel();
+
+	  $order->getPayment()->setAdditionalData(json_encode($additionalData));
+	  $order->getPayment()->setCcStatus($response->getStatusId());
+	  $order->getPayment()->setLastTransId($response->getTransactionId());
+	  $order->getPayment()->setTokenTransaction($response->getTokenTransaction());
+
+	  // calcular data para cancelar boleto
+	  $orderCreatedAt = $order->getCreatedAt();
+	  $config = Mage::helper('eloom_yapay/config');
+	  $dayOfWeek = date("w", strtotime($orderCreatedAt));
+	  $incrementDays = null;
+
+	  switch ($dayOfWeek) {
+		  case 5: // Sexta-Feira
+			  $incrementDays = $config->getBilletCancelOnFriday();
+			  break;
+
+		  case 6: // Sabado
+			  $incrementDays = $config->getBilletCancelOnSaturday();
+			  break;
+
+		  default:
+			  $incrementDays = $config->getBilletCancelOnSunday();
+			  break;
+	  }
+
+	  $totalDays = $config->getBilletExpiration() + $incrementDays;
+	  $cancellationDate = strftime("%Y-%m-%d %H:%M:%S", strtotime("$orderCreatedAt +$totalDays day"));
+	  $order->getPayment()->setBoletoCancellation($cancellationDate);
+	  $order->getPayment()->save();
+
+	  Mage::dispatchEvent('eloom_yapay_process_transaction', array('order' => $order, 'status' => $response->getStatusId()));
+
+	  return $response;
   }
 
 }

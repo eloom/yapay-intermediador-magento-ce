@@ -14,6 +14,12 @@ class Eloom_Yapay_Model_Cc_Request extends Mage_Core_Model_Abstract {
 		$payment = $order->getPayment();
 		$additionalData = json_decode($payment->getAdditionalData());
 
+		$helper = Mage::helper('eloom_yapay');
+
+		if($additionalData->creditCardNumber == null || $additionalData->creditCardExpiry == null || $additionalData->creditCardHolderName == null || $additionalData->creditCardCvc == null) {
+			throw new InvalidArgumentException($helper->__('Credit card can not be null.'));
+		}
+
 		$billingAddress = $order->getBillingAddress();
 		$shippingAddress = null;
 		if ($order->getIsVirtual()) {
@@ -70,6 +76,7 @@ class Eloom_Yapay_Model_Cc_Request extends Mage_Core_Model_Abstract {
 		$creditCard->setTransaction()->setCustomerIp($order->getRemoteIp());
 		$creditCard->setTransaction()->setPriceDiscount(round(abs($amount), 2));
 		$creditCard->setTransaction()->setFree(sprintf("Pedido %s", $order->getIncrementId()));
+		$creditCard->setTransaction()->setOrderNumber($order->getIncrementId());
 
 		/* Frete */
 		$creditCard->setTransaction()->setShippingType($order->getShippingDescription());
@@ -128,8 +135,25 @@ class Eloom_Yapay_Model_Cc_Request extends Mage_Core_Model_Abstract {
 		$creditCard->setBilling()->setAddress()->withParameters('B', substr($billingAddress->getStreet(1), 0, 80), substr($billingAddress->getStreet(2), 0, 20), substr($billingAddress->getStreet(4), 0, 60), $zipCode, $billingAddress->getCity(), $billingAddress->getRegionCode(), $billingAddress->getCountryModel()->getIso3Code(), substr($billingAddress->getStreet(3), 0, 40));
 
 		$credential = Eloom_Yapay_Configuration_Configure::getAccountCredentials();
-		$result = $creditCard->register($credential);
+		$response = $creditCard->register($credential);
 
-		return $result;
+
+		/* Parse Response */
+		$additionalData = json_decode($order->getPayment()->getAdditionalData());
+		$additionalData->creditCardNumber = null;
+		$additionalData->creditCardCvc = null;
+
+		$order->getPayment()->setCcStatus($response->getStatusId());
+		$additionalData->yapayOrderId = $response->getOrderNumber();
+
+		$order->getPayment()->setAdditionalData(json_encode($additionalData));
+		$order->getPayment()->setLastTransId($response->getTransactionId());
+		$order->getPayment()->setTokenTransaction($response->getTokenTransaction());
+		$order->getPayment()->setCcDebugResponseBody('');
+		$order->getPayment()->save();
+
+		Mage::dispatchEvent('eloom_yapay_process_transaction', array('order' => $order, 'status' => $response->getStatusId()));
+
+		return $response;
 	}
 }

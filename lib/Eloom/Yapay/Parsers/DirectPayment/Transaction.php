@@ -18,6 +18,9 @@ trait Eloom_Yapay_Parsers_DirectPayment_Transaction {
 		$data[$properties::AVAILABLE_PAYMENT_METHOD] = Eloom_Yapay_Enum_DirectPayment_Method::AVAILABLE_PAYMENT_METHODS;
 		$data[$properties::NOTIFICATION_URL] = $transaction->getUrlNotification();
 		$data[$properties::CUSTOMER_IP] = $transaction->getCustomerIp();
+		$data[$properties::ORDER_NUMBER] = $transaction->getOrderNumber();
+		$data[$properties::FREE] = $transaction->getFree();
+
 		if (!is_null($transaction->getPriceDiscount())) {
 			$data[$properties::PRICE_DISCOUNT] = $transaction->getPriceDiscount();
 		}

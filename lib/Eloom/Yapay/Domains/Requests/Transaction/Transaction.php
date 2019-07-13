@@ -121,4 +121,19 @@ trait Eloom_Yapay_Domains_Requests_Transaction_Transaction {
 		$this->transaction->setPaymentMethodId($paymentMethodId);
 		return $this;
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getOrderNumber() {
+		return $this->transaction->orderNumber;
+	}
+
+	/**
+	 * @param mixed $orderNumber
+	 */
+	public function setOrderNumber($orderNumber) {
+		$this->transaction->setOrderNumber($orderNumber);
+		return $this;
+	}
 }
