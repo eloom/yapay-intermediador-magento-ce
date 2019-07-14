@@ -84,6 +84,9 @@ Os projetos da élOOm utilizam o [Apache Ant](https://ant.apache.org/) para publ
 
 	> os arquivos .css e .js serão comprimidos automáticamente usando o [YUI Compressor](https://yui.github.io/yuicompressor/).
 	
+
 ## Release Notes
 
-1.0.0 - Lançamento
+### [1.0.0] - 2019-07-08
+
+#### Versão inicial
