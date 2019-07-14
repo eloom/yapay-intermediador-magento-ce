@@ -49,16 +49,4 @@ class Eloom_Yapay_Model_Method_Terminal extends Mage_Payment_Model_Method_Abstra
   public function getInstructions() {
     return trim($this->getConfigData('instructions'));
   }
-
-  /**
-   * Prepare info instance for save
-   *
-   * @return Mage_Payment_Model_Abstract
-   */
-  public function prepareSave() {
-    //$info = $this->getInfoInstance();
-
-    return $this;
-  }
-
 }

@@ -86,13 +86,13 @@ EloomPayment.prototype = {
 				asynchronous: true,
 				method: 'post',
 				parameters: params,
-				onSuccess: this.nextStep.bindAsEventListener(this),
+				onSuccess: this.nextStep.bindAsEventListener(this, btn),
 				onComplete: setTimeout(function() {
 					$(btn).next().hide();
 				}, 5000)
 			});
 	},
-	nextStep: function (transport) {
+	nextStep: function (transport, btn) {
 		var response = null;
 		if (transport && transport.responseText) {
 			try {
@@ -103,9 +103,12 @@ EloomPayment.prototype = {
 		}
 		if (response.error) {
 			$('messages-yapay').down('li').addClassName('notice-msg').innerHTML = response.error;
+			$(btn).enable();
 		} else {
 			$('messages-yapay').down('li').addClassName('success-msg').innerHTML = response.message;
 			$('co-payment-form').down('fieldset').hide();
+
+			window.location = response.url;
 		}
 		$('messages-yapay').show();
 	}

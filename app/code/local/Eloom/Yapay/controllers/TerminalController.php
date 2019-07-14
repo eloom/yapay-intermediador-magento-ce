@@ -77,8 +77,7 @@ class Eloom_Yapay_TerminalController extends Mage_Core_Controller_Front_Action {
 							$this->logger->fatal($e->getTraceAsString());
 						}
 					}
-
-					$message = array('url' => Mage::getBaseUrl(), 'message' => sprintf("<ul><li>%s</li><li>%s</li></ul>", $this->__('Your payment was processed by Yapay'), $this->__('Billett will be sent to your email.')));
+					$message = array('url' => 'checkout/onepage/success');
 					break;
 			}
 		} catch (Eloom_Yapay_UnprocessableEntityException $e) {
@@ -95,7 +94,53 @@ class Eloom_Yapay_TerminalController extends Mage_Core_Controller_Front_Action {
 	}
 
 	private function processPaymentCc(Varien_Object $data) {
+		$data = $this->getRequest()->getPost('payment', array());
+		$data = new Varien_Object($data);
+
+		$serializedValue = null;
+		if ($data->getYapayCcCvc()) {
+			$additional = new stdClass();
+			$additional->creditCardNumber = Mage::helper('core')->encrypt($data->getYapayCcNumber());
+			$additional->creditCardHolderName = $data->getYapayCcOwner();
+			$additional->creditCardCvc = Mage::helper('core')->encrypt($data->getYapayCcCvc());
+			$additional->fingerPrint = $data->getYapayFingerPrint();
+
+			if ($data->getYapayCcExpiry() && $data->getYapayCcExpiry() != '') {
+				$expiry = explode("/", trim($data->getYapayCcExpiry()));
+				$month = trim($expiry[0]);
+				$year = trim($expiry[1]);
+				if (strlen($year) == 2) {
+					$year = '20' . $year;
+				}
+				$expiry = $year . '/' . $month;
+				$additional->creditCardExpiry = $expiry;
+			}
+
+			$installments = 0;
+			$installmentAmount = 0;
+
+			$arrayex = explode('-', $data->getYapayCcInstallments());
+			if (isset($arrayex[0])) {
+				$installments = $arrayex[0];
+				$installmentAmount = $arrayex[1];
+			}
+
+			$additional->installments = $installments;
+			$additional->installmentAmount = $installmentAmount;
+
+			if ($data->getYapayCcHolderAnother() && $data->getYapayCcHolderAnother() == 1) {
+				$additional->creditCardHolderAnother = $data->getYapayCcHolderAnother();
+				$additional->creditCardHolderCpf = $data->getYapayCcHolderCpf();
+				$additional->creditCardHolderPhone = $data->getYapayCcHolderPhone();
+				$additional->creditCardHolderBirthDate = $data->getYapayCcHolderBirthDate();
+			}
+
+			$serializedValue = json_encode($additional);
+		}
 		$order = Mage::getSingleton('eloom_yapay/session')->getOrder();
+		$order->getPayment()->setAdditionalData($serializedValue);
+		$order->save();
+
 		$message = array();
 
 		/**
@@ -117,7 +162,7 @@ class Eloom_Yapay_TerminalController extends Mage_Core_Controller_Front_Action {
 							$this->logger->fatal($e->getTraceAsString());
 						}
 					}
-				$message = array('url' => Mage::getBaseUrl(), 'message' => "<ul><li>" . $this->__('Your payment was processed by Yapay') . "</li></ul>");
+					$message = array('url' => 'checkout/onepage/success');
 					break;
 			}
 		} catch (Eloom_Yapay_UnprocessableEntityException $e) {

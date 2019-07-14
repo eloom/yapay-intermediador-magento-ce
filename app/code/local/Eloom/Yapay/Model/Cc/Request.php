@@ -10,6 +10,11 @@ class Eloom_Yapay_Model_Cc_Request extends Mage_Core_Model_Abstract {
     $this->logger = Eloom_Bootstrap_Logger::getLogger(__CLASS__);
   }
 
+	/**
+	 * @param Mage_Sales_Model_Order $order
+	 * @return string
+	 * @throws Exception
+	 */
 	public function generatePaymentRequest(Mage_Sales_Model_Order $order) {
 		$payment = $order->getPayment();
 		$additionalData = json_decode($payment->getAdditionalData());
