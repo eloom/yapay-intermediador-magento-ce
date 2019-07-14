@@ -69,6 +69,7 @@ EloomPayment.prototype = {
 		return true;
 	},
 	save: function (btn) {
+		$$('ul.messages li.error-msg').invoke('remove');
 		var validator = new Validation(this.form);
 		if (!validator.validate()) {
 			return false;

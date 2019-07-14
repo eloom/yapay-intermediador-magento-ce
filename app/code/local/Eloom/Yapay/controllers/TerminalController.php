@@ -77,7 +77,7 @@ class Eloom_Yapay_TerminalController extends Mage_Core_Controller_Front_Action {
 							$this->logger->fatal($e->getTraceAsString());
 						}
 					}
-					$message = array('url' => 'checkout/onepage/success');
+					$message = array('url' => Mage::getUrl('checkout/onepage/success', array('_secure' => true)), 'message' => sprintf("<ul><li>%s</li><li>%s</li></ul>", $this->__('Your payment was processed by Yapay'), $this->__('Billett will be sent to your email.')));
 					break;
 			}
 		} catch (Eloom_Yapay_UnprocessableEntityException $e) {
@@ -162,7 +162,8 @@ class Eloom_Yapay_TerminalController extends Mage_Core_Controller_Front_Action {
 							$this->logger->fatal($e->getTraceAsString());
 						}
 					}
-					$message = array('url' => 'checkout/onepage/success');
+				Mage::getSingleton('checkout/session')->setLastRealOrderId($order->getId());
+				$message = array('url' => Mage::getUrl('checkout/onepage/success', array('_secure' => true)), 'message' => sprintf("<ul><li>%s</li><li>%s</li></ul>", $this->__('Your payment was processed by Yapay'), $this->__('Billett will be sent to your email.')));
 					break;
 			}
 		} catch (Eloom_Yapay_UnprocessableEntityException $e) {

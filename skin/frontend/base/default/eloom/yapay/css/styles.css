@@ -15,7 +15,7 @@ select {
 	transition: .4s;
 }
 .eloomyapay-terminal-index #co-payment-form #messages-yapay {
-	display: inline-block;
+	display: block;
 }
 .eloomyapay-terminal-index #co-payment-form dt img {
 	float: right;
