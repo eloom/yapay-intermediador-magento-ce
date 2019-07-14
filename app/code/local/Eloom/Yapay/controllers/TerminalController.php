@@ -67,44 +67,6 @@ class Eloom_Yapay_TerminalController extends Mage_Core_Controller_Front_Action {
 		try {
 			$response = Mage::getModel('eloom_yapay/boleto_request')->generatePaymentRequest($order);
 
-			/* link boleto */
-			$additionalData = new stdClass();
-			$additionalData->yapayOrderId = $response->getOrderNumber();
-			$additionalData->paymentLink = $response->getPayment()->getUrlPayment();
-			$additionalData->barCode = $response->getPayment()->getLinhaDigitavel();
-
-			$order->getPayment()->setAdditionalData(json_encode($additionalData));
-			$order->getPayment()->setCcStatus($response->getStatusId());
-			$order->getPayment()->setLastTransId($response->getTransactionId());
-			$order->getPayment()->setTokenTransaction($response->getTokenTransaction());
-
-			// calcular data para cancelar boleto
-			$orderCreatedAt = $order->getCreatedAt();
-			$config = Mage::helper('eloom_yapay/config');
-			$dayOfWeek = date("w", strtotime($orderCreatedAt));
-			$incrementDays = null;
-
-			switch ($dayOfWeek) {
-				case 5: // Sexta-Feira
-					$incrementDays = $config->getBilletCancelOnFriday();
-					break;
-
-				case 6: // Sabado
-					$incrementDays = $config->getBilletCancelOnSaturday();
-					break;
-
-				default:
-					$incrementDays = $config->getBilletCancelOnSunday();
-					break;
-			}
-
-			$totalDays = $config->getBilletExpiration() + $incrementDays;
-			$cancellationDate = strftime("%Y-%m-%d %H:%M:%S", strtotime("$orderCreatedAt +$totalDays day"));
-			$order->getPayment()->setBoletoCancellation($cancellationDate);
-			$order->getPayment()->save();
-
-			Mage::dispatchEvent('eloom_yapay_process_transaction', array('order' => $order, 'status' => $response->getStatusId()));
-
 			switch ($response->getStatusId()) {
 				case Eloom_Yapay_Enum_Transaction_Status::AGUARDANDO_PAGAMENTO:
 					Mage::getSingleton('checkout/type_onepage')->getCheckout()->setLastSuccessQuoteId(true);
@@ -126,8 +88,6 @@ class Eloom_Yapay_TerminalController extends Mage_Core_Controller_Front_Action {
 			$order->getPayment()->setCcDebugResponseBody(json_encode($e->getErrors()));
 			$order->getPayment()->save();
 
-			Mage::dispatchEvent('eloom_yapay_cancel_order', array('order' => $order, 'comment' => 'Falha no Pagamento.'));
-
 			$message = array('error' => "<ul><li>" . implode("</li><li>", $e->getErrors()) . "</li></ul>");
 		}
 
@@ -138,69 +98,15 @@ class Eloom_Yapay_TerminalController extends Mage_Core_Controller_Front_Action {
 		$order = Mage::getSingleton('eloom_yapay/session')->getOrder();
 		$message = array();
 
-		$ccNumber = preg_replace('/\D/', '', $data->getYapayCcNumber());
-		$order->getPayment()->setCcName($data->getYapayCcName())
-			->setCcOwner($data->getYapayCcOwner())
-			->setCcLast4(substr($ccNumber, -4))
-			->setCcType($data->getYapayCcType())
-			->setCcCvc($data->getYapayCcCvc())
-			->setCcInstallments($data->getYapayCcInstallments())
-			->setCcNumber($ccNumber);
-
-		$expiry = null;
-		if ($data->getYapayCcExpiry() && $data->getYapayCcExpiry() != '') {
-			$expiry = explode("/", trim($data->getYapayCcExpiry()));
-			$month = trim($expiry[0]);
-			$year = trim($expiry[1]);
-			if (strlen($year) == 2) {
-				$year = '20' . $year;
-			}
-			$expiry = $year . '/' . $month;
-			$order->getPayment()->setCcExpiry($expiry);
-		}
-
-		// salva
-		$additional = new stdClass();
-		$additional->creditCardNumber = Mage::helper('core')->encrypt($ccNumber);
-		$additional->creditCardHolderName = $data->getYapayCcOwner();
-		$additional->creditCardCvc = $data->getYapayCcCvc();
-		$additional->creditCardExpiry = $expiry;
-
-		$additional->installments = $data->getYapayCcInstallments();
-		if ($data->getYapayCcHolderAnother() && $data->getYapayCcHolderAnother() == 1) {
-			$additional->creditCardHolderAnother = $data->getYapayCcHolderAnother();
-			$additional->creditCardHolderCpf = $data->getYapayCcHolderCpf();
-			$additional->creditCardHolderPhone = $data->getYapayCcHolderPhone();
-			$additional->creditCardHolderBirthDate = $data->getYapayCcHolderBirthDate();
-		}
-
-		$serializedValue = json_encode($additional);
-		$order->getPayment()->setAdditionalData($serializedValue);
-		$order->getPayment()->save();
-
 		/**
 		 * Envia o Pagamento
 		 */
 		try {
 			$response = Mage::getModel('eloom_yapay/cc_request')->generatePaymentRequest($order);
 
-			$additionalData = json_decode($order->getPayment()->getAdditionalData());
-			$additionalData->creditCardNumber = null;
-			$additionalData->creditCardCvc = null;
-
-			$order->getPayment()->setCcStatus($response->getStatusId());
-			$additionalData->yapayOrderId = $response->getOrderNumber();
-
-			$order->getPayment()->setAdditionalData(json_encode($additionalData));
-			$order->getPayment()->setLastTransId($response->getTransactionId());
-			$order->getPayment()->setTokenTransaction($response->getTokenTransaction());
-			$order->getPayment()->setCcDebugResponseBody('');
-			$order->getPayment()->save();
-
-			Mage::dispatchEvent('eloom_yapay_process_transaction', array('order' => $order, 'status' => $response->getStatusId()));
-
 			switch ($response->getStatusId()) {
 				case Eloom_Yapay_Enum_Transaction_Status::AGUARDANDO_PAGAMENTO:
+				case Eloom_Yapay_Enum_Transaction_Status::EM_MONITORAMENTO:
 				case Eloom_Yapay_Enum_Transaction_Status::EM_PROCESSAMENTO:
 				case Eloom_Yapay_Enum_Transaction_Status::APROVADA:
 					Mage::getSingleton('checkout/type_onepage')->getCheckout()->setLastSuccessQuoteId(true);
@@ -220,8 +126,6 @@ class Eloom_Yapay_TerminalController extends Mage_Core_Controller_Front_Action {
 			$order->getPayment()->setCcStatus(Eloom_Yapay_Enum_Transaction_Status::NOT_FOUND);
 			$order->getPayment()->setCcDebugResponseBody(json_encode($e->getErrors()));
 			$order->getPayment()->save();
-
-			Mage::dispatchEvent('eloom_yapay_cancel_order', array('order' => $order, 'comment' => 'Falha no Pagamento.'));
 
 			$message = array('error' => "<ul><li>" . implode("</li><li>", $e->getErrors()) . "</li></ul>");
 		}

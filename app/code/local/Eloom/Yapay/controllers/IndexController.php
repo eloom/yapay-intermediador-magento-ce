@@ -14,6 +14,18 @@ class Eloom_Yapay_IndexController extends Mage_Core_Controller_Front_Action {
 		parent::_construct();
 	}
 
+	public function indexAction() {
+
+		$date = new Eloom_LVR_ExpirationDateValidator('2019','07');
+		$card = new Eloom_LVR_CardCvc('3435 660940 16769');
+
+		$data = array('expiration' => $date->isValid(),
+			'Card' => ($card->passes('123') ? true : $card->message()));
+
+		$this->getResponse()->setHeader('Content-type', 'application/json', true);
+		$this->getResponse()->setBody(json_encode($data));
+	}
+
 	public function installmentsAction() {
 		if (!$this->getRequest()->isPost()) {
 			//return;

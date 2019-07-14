@@ -69,10 +69,13 @@ class Eloom_Yapay_CcController extends Mage_Core_Controller_Front_Action {
       $order->getPayment()->setCcDebugResponseBody(json_encode($e->getErrors()));
       $order->getPayment()->save();
 
+	    $url = Mage::helper('eloom_yapay')->generateWebCheckoutPaymentLink($order->getIncrementId(), $order->getBaseGrandTotal());
+
+	    // FIXME: ver com a Yapay o serviço de cancelamento
       //Mage::dispatchEvent('eloom_yapay_cancel_transaction', array('order' => $order, 'comment' => 'Falha no Pagamento.'));
 
       Mage::getSingleton('checkout/session')->setErrorMessage("<ul><li>" . implode("</li><li>", $e->getErrors()) . "</li></ul>");
-      $this->_redirect('checkout/onepage/failure', array('_secure' => true));
+      $this->_redirect($url, array('_secure' => true));
     } catch (\Exception $e) {
 	    $this->logger->fatal($e->getCode() . ' - ' . $e->getMessage());
 
