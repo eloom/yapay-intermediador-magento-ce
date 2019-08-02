@@ -12,8 +12,6 @@ class Eloom_Yapay_Helpers_Json {
 		if ($node) {
 			if (isset($this->json[$node])) {
 				return $this->json[$node];
-			} else {
-				throw new Exception("Yap_Library JSON parsing error: undefined index [$node]");
 			}
 		} else {
 			return $this->json;

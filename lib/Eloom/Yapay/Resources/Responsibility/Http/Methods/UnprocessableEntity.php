@@ -31,6 +31,7 @@ class Eloom_Yapay_Resources_Responsibility_Http_Methods_UnprocessableEntity impl
 		if ($http->getStatus() == Eloom_Yapay_Enum_Http_Status::UNPROCESSABLE_ENTITY) {
 			$error = $class::error($http);
 			$parser = new Eloom_Yapay_Helpers_Json($error->getMessage());
+
 			$data = $parser->getResult('error_response');
 			$errors = [];
 
@@ -56,7 +57,8 @@ class Eloom_Yapay_Resources_Responsibility_Http_Methods_UnprocessableEntity impl
 				}
 			}
 
-			throw new Eloom_Yapay_UnprocessableEntityException($error->getMessage(), $error->getCode(), $errors);
+			$data = $parser->getResult('additional_data');
+			throw new Eloom_Yapay_UnprocessableEntityException($error->getMessage(), $error->getCode(), $errors, $data);
 		}
 
 		return $this->successor->handler($http, $class);

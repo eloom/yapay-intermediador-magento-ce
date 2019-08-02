@@ -5,64 +5,7 @@
  *
  * @package Yapay\Resources
  */
-class Eloom_Yapay_Resources_Rest {
-
-	/**
-	 *
-	 * @var
-	 *
-	 */
-	private $status;
-
-	/**
-	 *
-	 * @var
-	 *
-	 */
-	private $response;
-
-	/**
-	 * Http constructor.
-	 */
-	public function __construct() {
-		if (!function_exists('curl_init')) {
-			throw new \Exception('Yapay Library: cURL library is required.');
-		}
-	}
-
-	/**
-	 *
-	 * @return mixed
-	 */
-	public function getStatus() {
-		return $this->status;
-	}
-
-	/**
-	 *
-	 * @param
-	 *          $status
-	 */
-	public function setStatus($status) {
-		$this->status = $status;
-	}
-
-	/**
-	 *
-	 * @return mixed
-	 */
-	public function getResponse() {
-		return $this->response;
-	}
-
-	/**
-	 *
-	 * @param
-	 *          $response
-	 */
-	public function setResponse($response) {
-		$this->response = $response;
-	}
+class Eloom_Yapay_Resources_Rest extends Eloom_Yapay_Resources_Http {
 
 	/**
 	 *
@@ -94,6 +37,20 @@ class Eloom_Yapay_Resources_Rest {
 	/**
 	 *
 	 * @param
+	 *          $url
+	 * @param array $data
+	 * @param int $timeout
+	 * @param string $charset
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function patch($url, array $data = array(), $timeout = 20, $charset = 'ISO-8859-1') {
+		return $this->curlConnection('PATCH', $url, $timeout, $charset, $data);
+	}
+
+	/**
+	 *
+	 * @param
 	 *          $method
 	 * @param
 	 *          $url
@@ -105,12 +62,20 @@ class Eloom_Yapay_Resources_Rest {
 	 * @return bool
 	 * @throws \Exception
 	 */
-	private function curlConnection($method, $url, $timeout, $charset, array $data = null) {
+	protected function curlConnection($method, $url, $timeout, $charset, array $data = null) {
 		if (strtoupper($method) === 'POST') {
 			$postFields = ($data ? http_build_query($data, '', '&') : "");
 			$contentLength = "Content-length: " . strlen($postFields);
 			$methodOptions = array(
 				CURLOPT_POST => true,
+				CURLOPT_POSTFIELDS => $postFields
+			);
+		} else if (strtoupper($method) === 'PATCH') {
+			$postFields = json_encode($data);
+			$contentLength = null;
+
+			$methodOptions = array(
+				CURLOPT_CUSTOMREQUEST => 'PATCH',
 				CURLOPT_POSTFIELDS => $postFields
 			);
 		} else {
@@ -143,6 +108,7 @@ class Eloom_Yapay_Resources_Rest {
 		if (!is_null(Eloom_Yapay_Library::cmsVersion()->getRelease())) {
 			array_push($options [CURLOPT_HTTPHEADER], sprintf('cms-description: %s :%s', Eloom_Yapay_Library::cmsVersion()->getName(), Eloom_Yapay_Library::cmsVersion()->getRelease()));
 		}
+
 
 		$options = ($options + $methodOptions);
 		$curl = curl_init();

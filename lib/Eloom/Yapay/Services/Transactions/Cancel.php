@@ -9,7 +9,7 @@ class Eloom_Yapay_Services_Transactions_Cancel {
 
 	/**
 	 * @param Eloom_Yapay_Domains_AccountCredentials $credentials
-	 * @param $tokenTransaction
+	 * @param $transactionId
 	 * @return mixed
 	 * @throws Exception
 	 */
@@ -17,7 +17,10 @@ class Eloom_Yapay_Services_Transactions_Cancel {
 		try {
 			$connection = new Eloom_Yapay_Resources_Connection_Data($credentials);
 			$http = new Eloom_Yapay_Resources_Rest();
-			$http->get(self::request($connection, $credentials->getToken(), $transactionId));
+
+			$data = array('access_token' => $credentials->getToken(), 'transaction_id' => $transactionId, 'reason_cancellation_id' => 6);
+			$http->patch(self::request($connection), $data);
+
 			$response = Eloom_Yapay_Resources_Responsibility::http($http, new Eloom_Yapay_Parsers_Transaction_Cancel_Request());
 
 			return $response;
@@ -33,8 +36,8 @@ class Eloom_Yapay_Services_Transactions_Cancel {
 	 * @param $tokenTransaction
 	 * @return string
 	 */
-	private static function request($connection, $token, $transactionId) {
-		return $connection->buildCancelRequestUrl() . "?access_token={$token}&transaction_id={$transactionId}&reason_cancellation_id=6";
+	private static function request($connection) {
+		return $connection->buildCancelRequestUrl();
 	}
 
 }

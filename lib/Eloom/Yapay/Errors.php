@@ -10,6 +10,7 @@ class Eloom_Yapay_Errors {
 		'001001' => array('message' => 'Token inválido ou não encontrado.'),
 		'003003' => array('message' => 'Forma de Pagamento Inválida.'),
 		'003004' => array('message' => 'Número da Parcela Inválido.'),
+		'003005' => array('message' => 'Transação inválida ou inexistente.'),
 		'003011' => array('message' => 'Numero do cartão inválido.'),
 		'003012' => array('message' => 'Nome do cartão em branco.'),
 		'003014' => array('message' => 'Código de segurança inválido.'),

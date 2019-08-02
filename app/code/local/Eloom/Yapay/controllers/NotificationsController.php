@@ -16,7 +16,6 @@ class Eloom_Yapay_NotificationsController extends Mage_Core_Controller_Front_Act
 
 	public function indexAction() {
 		$data = $this->getRequest()->getPost();
-
 		if ($data && isset($data['transaction'])) {
 			try {
 				$transaction = $data['transaction'];

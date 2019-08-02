@@ -19,10 +19,8 @@ class Eloom_Yapay_Model_Cc_Request extends Mage_Core_Model_Abstract {
 		$payment = $order->getPayment();
 		$additionalData = json_decode($payment->getAdditionalData());
 
-		$helper = Mage::helper('eloom_yapay');
-
 		if($additionalData->creditCardNumber == null || $additionalData->creditCardExpiry == null || $additionalData->creditCardHolderName == null || $additionalData->creditCardCvc == null) {
-			throw new InvalidArgumentException($helper->__('Credit card can not be null.'));
+			throw new InvalidArgumentException(Mage::helper('eloom_yapay')->__('Credit card can not be null.'));
 		}
 
 		$billingAddress = $order->getBillingAddress();
@@ -89,6 +87,7 @@ class Eloom_Yapay_Model_Cc_Request extends Mage_Core_Model_Abstract {
 
 		/* Payment */
 		$creditCardNumber = Mage::helper('core')->decrypt($additionalData->creditCardNumber);
+		$creditCardCvc = Mage::helper('core')->decrypt($additionalData->creditCardCvc);
 		$expiry = explode("/", trim($additionalData->creditCardExpiry));
 		$month = trim($expiry[1]);
     $year = trim($expiry[0]);
@@ -99,7 +98,7 @@ class Eloom_Yapay_Model_Cc_Request extends Mage_Core_Model_Abstract {
 		$creditCard->setPayment()->setCardNumber($creditCardNumber);
 		$creditCard->setPayment()->setCardExpdateMonth($month);
 		$creditCard->setPayment()->setCardExpdateYear($year);
-		$creditCard->setPayment()->setCardCvv($additionalData->creditCardCvc);
+		$creditCard->setPayment()->setCardCvv($creditCardCvc);
 		$creditCard->setPayment()->setSplit($additionalData->installments);
 
 		/* ------- itens ------- */
@@ -141,7 +140,6 @@ class Eloom_Yapay_Model_Cc_Request extends Mage_Core_Model_Abstract {
 
 		$credential = Eloom_Yapay_Configuration_Configure::getAccountCredentials();
 		$response = $creditCard->register($credential);
-
 
 		/* Parse Response */
 		$additionalData = json_decode($order->getPayment()->getAdditionalData());

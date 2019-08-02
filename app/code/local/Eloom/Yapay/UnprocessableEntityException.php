@@ -6,8 +6,11 @@ class Eloom_Yapay_UnprocessableEntityException extends \Exception {
 
 	private $errors = [];
 
-	public function __construct($message, $code = 0, $errors, Exception $previous = null) {
+	private $additionalData;
+
+	public function __construct($message, $code = 0, $errors, $additionalData, Exception $previous = null) {
 		$this->errors = $errors;
+		$this->additionalData = $additionalData;
 		parent::__construct($message, $code, $previous);
 	}
 
@@ -17,5 +20,12 @@ class Eloom_Yapay_UnprocessableEntityException extends \Exception {
 
 	public function getErrors() {
 		return $this->errors;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getAdditionalData() {
+		return $this->additionalData;
 	}
 }

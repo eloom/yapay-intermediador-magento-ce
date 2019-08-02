@@ -43,7 +43,7 @@ class Eloom_Yapay_Model_Transaction_Code extends Mage_Core_Model_Abstract {
 
 	    if($response && $response->getStatusId() && $response->getPayment()) {
 				if(!$response->getPayment()->getPaymentMethodId()) { // deu erro de validação de campo e é preciso cancelar
-					$response = Eloom_Yapay_Services_Transactions_Cancel::cancel($credentials, $payment->getLastTransId()); // FIXME: ver com a Yapay a URL de cancelamento que está dando 404
+					$response = Eloom_Yapay_Services_Transactions_Cancel::cancel($credentials, $payment->getLastTransId());
 				} else {
 					if ($response->getStatusId() != Eloom_Yapay_Enum_Transaction_Status::AGUARDANDO_PAGAMENTO) {
 						$payment->setCcStatus($response->getStatusId());

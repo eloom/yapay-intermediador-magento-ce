@@ -12,14 +12,14 @@ class Eloom_Yapay_Resources_Http {
 	 * @var
 	 *
 	 */
-	private $status;
+	protected $status;
 
 	/**
 	 *
 	 * @var
 	 *
 	 */
-	private $response;
+	protected $response;
 
 	/**
 	 * Http constructor.
@@ -105,7 +105,7 @@ class Eloom_Yapay_Resources_Http {
 	 * @return bool
 	 * @throws \Exception
 	 */
-	private function curlConnection($method, $url, $timeout, $charset, array $data = null) {
+	protected function curlConnection($method, $url, $timeout, $charset, array $data = null) {
 		if (strtoupper($method) === 'POST') {
 			$postFields = ($data ? http_build_query($data, '', '&') : "");
 			$contentLength = "Content-length: " . strlen($postFields);

@@ -15,12 +15,12 @@ class Eloom_Yapay_IndexController extends Mage_Core_Controller_Front_Action {
 	}
 
 	public function indexAction() {
+		$credentials = new Eloom_Yapay_Domains_AccountCredentials();
+		$credentials->setToken('1f5685b5d4a651d');
 
-		$date = new Eloom_LVR_ExpirationDateValidator('2019','07');
-		$card = new Eloom_LVR_CardCvc('3435 660940 16769');
+		$response = Eloom_Yapay_Services_Transactions_Cancel::cancel($credentials, '19479579');
 
-		$data = array('expiration' => $date->isValid(),
-			'Card' => ($card->passes('123') ? true : $card->message()));
+		$data = array('response' => $response);
 
 		$this->getResponse()->setHeader('Content-type', 'application/json', true);
 		$this->getResponse()->setBody(json_encode($data));
