@@ -18,7 +18,7 @@ class Eloom_Yapay_Block_Payment_Standard extends Mage_Payment_Block_Form {
   }
 
   public function getToken() {
-    return Mage::helper('eloom_yapay/config')->getToken();
+    return Eloom_Yapay_Configuration_Configure::getAccountCredentials()->getToken();
   }
 
 	public function isInProduction() {

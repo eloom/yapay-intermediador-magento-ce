@@ -9,79 +9,60 @@ class Eloom_Yapay_Domains_ApplicationCredentials implements Eloom_Yapay_Domains_
 	/**
 	 * @var
 	 */
-	private $appId;
+	private $resellerToken;
 
 	/**
 	 * @var
 	 */
-	private $appKey;
+	private $consumerKey;
 
 	/**
 	 * @var
 	 */
-	private $authorizationCode;
-
-	/**
-	 * ApplicationCredentials constructor.
-	 * @param null $appId
-	 * @param null $appKey
-	 */
-	public function __construct($appId = null, $appKey = null) {
-		//Setting app id
-		if (!is_null($appId)) {
-			$this->setAppId($appId);
-		}
-		//Setting app key
-		if (!is_null($appKey)) {
-			$this->setAppKey($appKey);
-		}
-	}
+	private $consumerSecret;
 
 	/**
 	 * @return mixed
 	 */
-	public function getAppId() {
-		return $this->appId;
+	public function getResellerToken() {
+		return $this->resellerToken;
 	}
 
 	/**
-	 * @param mixed $appId
-	 * @return AccountCredentials
+	 * @param mixed $resellerToken
 	 */
-	public function setAppId($appId) {
-		$this->appId = $appId;
+	public function setResellerToken($resellerToken) {
+		$this->resellerToken = $resellerToken;
 		return $this;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getAppKey() {
-		return $this->appKey;
+	public function getConsumerKey() {
+		return $this->consumerKey;
 	}
 
 	/**
-	 * @param mixed $appKey
-	 * @return AccountCredentials
+	 * @param mixed $consumerKey
 	 */
-	public function setAppKey($appKey) {
-		$this->appKey = $appKey;
+	public function setConsumerKey($consumerKey) {
+		$this->consumerKey = $consumerKey;
 		return $this;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getAuthorizationCode() {
-		return $this->authorizationCode;
+	public function getConsumerSecret() {
+		return $this->consumerSecret;
 	}
 
 	/**
-	 * @param mixed $authorizationCode
-	 * @return ApplicationCredentials
+	 * @param mixed $consumerSecret
 	 */
-	public function setAuthorizationCode($authorizationCode) {
-		$this->authorizationCode = $authorizationCode;
+	public function setConsumerSecret($consumerSecret) {
+		$this->consumerSecret = $consumerSecret;
 		return $this;
 	}
 
@@ -90,9 +71,9 @@ class Eloom_Yapay_Domains_ApplicationCredentials implements Eloom_Yapay_Domains_
 	 */
 	public function getAttributesMap() {
 		return [
-			'appId' => $this->getAppId(),
-			'appKey' => $this->getAppKey(),
-			'authorizationCode' => $this->getAuthorizationCode()
+			'resellerToken' => $this->getResellerToken(),
+			'consumerKey' => $this->getConsumerKey(),
+			'consumerSecret' => $this->getConsumerSecret()
 		];
 	}
 
@@ -101,7 +82,7 @@ class Eloom_Yapay_Domains_ApplicationCredentials implements Eloom_Yapay_Domains_
 	 */
 	public function toString() {
 		return sprintf(
-			"ApplicationCredentials[ Email : %s , Token: %s ]", $this->getAppId(), $this->getAppKey()
+			"ApplicationCredentials[ resellerToken : %s , consumerKey: %s , consumerSecret: %s]", $this->getResellerToken(), $this->getConsumerKey(), $this->getConsumerSecret()
 		);
 	}
 

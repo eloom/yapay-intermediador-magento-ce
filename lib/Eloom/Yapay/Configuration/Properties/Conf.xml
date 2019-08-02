@@ -1,18 +1,22 @@
 <?xml version="1.0"?>
 <config>
-	<credentials>
-		<application>
-			<production>
-				<consumer_key>c203e957e4596c71f05b3bd684eb111a</consumer_key>
-				<consumer_secret>7c6ffbf618b6bb40683b8d39afc0df51</consumer_secret>
-				<reseller_token>1f5685b5d4a651d</reseller_token>
-			</production>
-			<sandbox>
-				<consumer_key>c18a1a6f5a1c644096793559793e39d8</consumer_key>
-				<consumer_secret>6354913b72ec9491c7218d2c403a211a</consumer_secret>
-				<reseller_token>302e6d6a16b450a</reseller_token>
-			</sandbox>
-		</application>
-	</credentials>
-	<charset>UTF-8</charset>
+    <account>
+        <production>
+            <resellerToken>1f5685b5d4a651d</resellerToken>
+        </production>
+        <sandbox>
+            <resellerToken>302e6d6a16b450a</resellerToken>
+        </sandbox>
+    </account>
+    <application>
+        <production>
+            <consumerKey>c203e957e4596c71f05b3bd684eb111a</consumerKey>
+            <consumerSecret>7c6ffbf618b6bb40683b8d39afc0df51</consumerSecret>
+        </production>
+        <sandbox>
+            <consumerKey>c18a1a6f5a1c644096793559793e39d8</consumerKey>
+            <consumerSecret>6354913b72ec9491c7218d2c403a211a</consumerSecret>
+        </sandbox>
+    </application>
+    <charset>UTF-8</charset>
 </config>

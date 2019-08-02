@@ -15,6 +15,11 @@ class Eloom_Yapay_IndexController extends Mage_Core_Controller_Front_Action {
 	}
 
 	public function indexAction() {
+
+		Eloom_Yapay_Configuration_Configure::getApplicationCredentials();
+
+		return;
+
 		$credentials = new Eloom_Yapay_Domains_AccountCredentials();
 		$credentials->setToken('1f5685b5d4a651d');
 

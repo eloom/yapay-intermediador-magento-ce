@@ -10,7 +10,6 @@ class Eloom_Yapay_Helpers_Wrapper {
 	public static function credentials($config) {
 		return [
 			'credentials' => [
-				'email' => $config::EMAIL,
 				'token' => [
 					'environment' => [
 						'production' => $config::TOKEN_PRODUCTION,
@@ -36,15 +35,6 @@ class Eloom_Yapay_Helpers_Wrapper {
 	public static function charset($config) {
 		return [
 			'charset' => $config::CHARSET
-		];
-	}
-
-	public static function log($config) {
-		return [
-			'log' => [
-				'active' => $config::LOG_ACTIVE,
-				'location' => $config::LOG_LOCATION
-			]
 		];
 	}
 }

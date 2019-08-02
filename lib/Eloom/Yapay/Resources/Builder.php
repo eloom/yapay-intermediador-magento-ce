@@ -26,8 +26,8 @@ class Eloom_Yapay_Resources_Builder {
 	protected static function getResourcesFile() {
 		$resources = Mage::getBaseDir('lib') . DS . 'Eloom/Yapay/Configuration/Properties/Resources.xml';
 
-		if (defined('PS_RESOURCES')) {
-			$resources = PS_RESOURCES;
+		if (defined('YP_RESOURCES')) {
+			$resources = YP_RESOURCES;
 		}
 
 		return $resources;
@@ -44,7 +44,7 @@ class Eloom_Yapay_Resources_Builder {
 		if (is_null($protocol)) {
 			$protocol = $xml->path->protocol;
 		}
-		$environment = Eloom_Yapay_Configuration_Configure::getEnvironment()->getEnvironment();
+		$environment = Eloom_Yapay_Configuration_Configure::getEnvironment();
 		return sprintf(
 			"%s://%s", $protocol, current($xml->path->{$resource}->environment->{$environment})
 		);

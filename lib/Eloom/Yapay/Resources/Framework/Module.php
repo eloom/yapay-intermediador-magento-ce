@@ -12,7 +12,7 @@ class Eloom_Yapay_Resources_Framework_Module extends Eloom_Yapay_Resources_Frame
 	 * @return string
 	 */
 	public function getName() {
-		return 'eloom';
+		return 'éloom';
 	}
 
 	public function getRelease() {

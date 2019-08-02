@@ -25,12 +25,12 @@ class Eloom_Yapay_Model_Cron extends Mage_Core_Model_Abstract {
             ->addFieldToFilter('cc_status', Eloom_Yapay_Enum_Transaction_Status::AGUARDANDO_PAGAMENTO);
 
 	  if ($collection->getSize()) {
-		  $config = Mage::helper('eloom_yapay/config');
+		  $tokenAccount = Eloom_Yapay_Configuration_Configure::getAccountCredentials()->getToken();
 
 		  foreach ($collection as $payment) {
 			  try {
 				  $order = Mage::getModel('sales/order')->load($payment->getParentId());
-				  Mage::getModel('eloom_yapay/transaction_code')->synchronizeTransaction($config->getToken(), $payment, $order);
+				  Mage::getModel('eloom_yapay/transaction_code')->synchronizeTransaction($tokenAccount, $payment, $order);
 			  } catch (Exception $exc) {
 				  $this->logger->error(sprintf("Erro ao verificar Pagamento [%s] [%s]", $payment->getId(), $exc->getMessage()));
 			  }

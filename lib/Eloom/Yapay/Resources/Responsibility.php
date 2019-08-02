@@ -19,12 +19,8 @@ class Eloom_Yapay_Resources_Responsibility {
 
 	public static function configuration() {
 		$environment = new Eloom_Yapay_Resources_Responsibility_Configuration_Environment();
-		$extensible = new Eloom_Yapay_Resources_Responsibility_Configuration_Extensible();
-		$file = new Eloom_Yapay_Resources_Responsibility_Configuration_File();
-		$wrapper = new Eloom_Yapay_Resources_Responsibility_Configuration_Wrapper();
 
-		$wrapper->successor($environment->successor($file->successor($extensible)));
-		return $wrapper->handler(null, null);
+		return $environment->handler(null, null);
 	}
 
 	public static function notifications() {

@@ -30,8 +30,8 @@ class Eloom_Yapay_TerminalController extends Mage_Core_Controller_Front_Action {
 		Mage::getSingleton('eloom_yapay/session')->setOrder($order);
 
 		$helper = Mage::helper('eloom_yapay');
-		$config = Mage::helper('eloom_yapay/config');
-		$signature = $helper->generateSignature($config->getToken(), $orderIncrementId, 'BRL');
+		$tokenAccount = Eloom_Yapay_Configuration_Configure::getAccountCredentials()->getToken();
+		$signature = $helper->generateSignature($tokenAccount, $orderIncrementId, 'BRL');
 
 		if ($signature != $hash) {
 			Mage::getSingleton('core/session')->addNotice('A Hash recebida na URL não confere com a Hash gerada no pedido. Verifique se o link informado é igual ao que recebeu por email.');

@@ -4,9 +4,15 @@
 
 class Eloom_Yapay_Model_Installments extends Mage_Core_Model_Abstract {
 
+	/**
+	 * @param $paymentMethodId
+	 * @param $amount
+	 * @return array
+	 * @throws Exception
+	 */
 	public function calculateInstallmentsByAntecipacao($paymentMethodId, $amount) {
-		$config = Mage::helper('eloom_yapay/config');
-		$params = array('token_account' => $config->getToken(), 'price' => $amount);
+		$token = Eloom_Yapay_Configuration_Configure::getAccountCredentials()->getToken();
+		$params = array('token_account' => $token, 'price' => $amount);
 
 		$url = Eloom_Yapay_Resources_Builder::getWebserviceUrl() . '/v1/transactions/simulate_splitting';
 		$http = new Eloom_Yapay_Resources_Http ();
@@ -33,6 +39,10 @@ class Eloom_Yapay_Model_Installments extends Mage_Core_Model_Abstract {
 		return $installments;
 	}
 
+	/**
+	 * @param $amount
+	 * @return array
+	 */
 	public function calculateInstallmentsByFluxo($amount) {
 		$config = Mage::helper('eloom_yapay/config');
 

@@ -22,9 +22,9 @@ class Eloom_Yapay_Model_Boleto_Request extends Mage_Core_Model_Abstract {
       $shippingAddress = $order->getShippingAddress();
     }
 
-	  $config = Mage::helper('eloom_yapay/config');
+	  $tokenAccount = Eloom_Yapay_Configuration_Configure::getAccountCredentials()->getToken();
 	  $boleto = new Eloom_Yapay_Domains_Requests_DirectPayment_Boleto();
-	  $boleto->setToken($config->getToken());
+	  $boleto->setToken($tokenAccount);
 	  $boleto->setFingerPrint($additionalData->fingerPrint);
 
 	  $birthday = $order->getCustomerDob();

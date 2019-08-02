@@ -33,8 +33,9 @@ class Eloom_Yapay_Model_Cc_Request extends Mage_Core_Model_Abstract {
 		$config = Mage::helper('eloom_yapay/config');
 
 		/* Credit Card Payment */
+		$tokenAccount = Eloom_Yapay_Configuration_Configure::getAccountCredentials()->getToken();
 		$creditCard = new Eloom_Yapay_Domains_Requests_DirectPayment_CreditCard();
-		$creditCard->setToken($config->getToken());
+		$creditCard->setToken($tokenAccount);
 		$creditCard->setFingerPrint($additionalData->fingerPrint);
 
 		$taxVat = null;

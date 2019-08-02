@@ -29,13 +29,15 @@ class Eloom_Yapay_Library {
 	 * @throws \Exception
 	 */
 	final public static function initialize() {
-		define('PS_BASEPATH', __DIR__);
-		define('PS_CONFIG_PATH', PS_BASEPATH . "/Configuration/");
-		define('PS_CONFIG', PS_CONFIG_PATH . "Properties/Conf.xml");
-		define('PS_RESOURCES', PS_CONFIG_PATH . "Properties/Resources.xml");
+		if(!defined(YP_BASEPATH)) {
+			define('YP_BASEPATH', __DIR__);
+			define('YP_CONFIG_PATH', YP_BASEPATH . "/Configuration/");
+			define('YP_CONFIG', YP_CONFIG_PATH . "Properties/Conf.xml");
+			define('YP_RESOURCES', YP_CONFIG_PATH . "Properties/Resources.xml");
 
-		self::validate();
-		gc_enable();
+			self::validate();
+			gc_enable();
+		}
 	}
 
 	/**

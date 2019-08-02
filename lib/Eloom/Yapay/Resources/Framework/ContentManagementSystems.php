@@ -9,5 +9,4 @@ class Eloom_Yapay_Resources_Framework_ContentManagementSystems extends Eloom_Yap
 	public function getName() {
 		return 'magento:' . Mage::getVersion();
 	}
-
 }

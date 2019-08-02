@@ -14,11 +14,14 @@ class Eloom_Yapay_Configuration_Configure {
 
 	/**
 	 *
-	 * @return AccountCredentials
+	 * @return Eloom_Yapay_Domains_AccountCredentials
 	 */
 	public static function getAccountCredentials() {
 		if (!isset(self::$accountCredentials)) {
-			self::setAccountCredentials(Mage::helper('eloom_yapay/config')->getToken());
+			Eloom_Yapay_Library::initialize();
+			$configuration = Eloom_Yapay_Resources_Responsibility::configuration();
+
+			self::setAccountCredentials($configuration ['credentials'] ['accountToken'] ['environment'][$configuration ['environment']]);
 		}
 
 		return self::$accountCredentials;
@@ -29,7 +32,7 @@ class Eloom_Yapay_Configuration_Configure {
 	 * @param string $token
 	 */
 	public static function setAccountCredentials($token) {
-		self::$accountCredentials = new Eloom_Yapay_Domains_AccountCredentials ();
+		self::$accountCredentials = new Eloom_Yapay_Domains_AccountCredentials();
 		self::$accountCredentials->setToken($token);
 	}
 
@@ -39,21 +42,25 @@ class Eloom_Yapay_Configuration_Configure {
 	 */
 	public static function getApplicationCredentials() {
 		if (!isset(self::$applicationCredentials)) {
+			Eloom_Yapay_Library::initialize();
 			$configuration = Eloom_Yapay_Resources_Responsibility::configuration();
-			self::setApplicationCredentials($configuration ['credentials'] ['appId'] ['environment'] [$configuration ['environment']], $configuration ['credentials'] ['appKey'] ['environment'] [$configuration ['environment']]);
+
+			self::setApplicationCredentials($configuration ['credentials'] ['resellerToken'] ['environment'] [$configuration ['environment']],
+				$configuration ['credentials'] ['consumerKey'] ['environment'][$configuration ['environment']],
+				$configuration ['credentials'] ['consumerSecret'] ['environment'] [$configuration ['environment']]);
 		}
 
 		return self::$applicationCredentials;
 	}
 
 	/**
-	 *
-	 * @param string $appId
-	 * @param string $appKey
+	 * @param $resellerToken
+	 * @param $consumerKey
+	 * @param $consumerSecret
 	 */
-	public static function setApplicationCredentials($appId, $appKey) {
+	public static function setApplicationCredentials($resellerToken, $consumerKey, $consumerSecret) {
 		self::$applicationCredentials = new Eloom_Yapay_Domains_ApplicationCredentials ();
-		self::$applicationCredentials->setAppId($appId)->setAppKey($appKey);
+		self::$applicationCredentials->setResellerToken($resellerToken)->setConsumerKey($consumerKey)->setConsumerSecret($consumerSecret);
 	}
 
 	/**
@@ -62,8 +69,9 @@ class Eloom_Yapay_Configuration_Configure {
 	 */
 	public static function getEnvironment() {
 		if (!isset(self::$environment)) {
-			$environment = Mage::helper('eloom_yapay/config')->getEnvironment();
-			self::setEnvironment($environment);
+			Eloom_Yapay_Library::initialize();
+			$configuration = Eloom_Yapay_Resources_Responsibility::configuration();
+			self::setEnvironment($configuration ['$environment']);
 		}
 		return self::$environment;
 	}
@@ -83,6 +91,7 @@ class Eloom_Yapay_Configuration_Configure {
 	 */
 	public static function getCharset() {
 		if (!isset(self::$charset)) {
+			Eloom_Yapay_Library::initialize();
 			$configuration = Eloom_Yapay_Resources_Responsibility::configuration();
 			self::setCharset($configuration ['charset']);
 		}

@@ -15,44 +15,42 @@ class Eloom_Yapay_Resources_Responsibility_Configuration_Environment implements 
 	 * @inheritDoc
 	 */
 	public function handler($action, $class) {
-		if (getenv(\Yapay\Enum\Configuration\Environment::ENV) and
-			getenv(\Yapay\Enum\Configuration\Environment::EMAIL)) {
+		if (file_exists(YP_CONFIG)) {
 			return array_merge(
-				$this->environment(),
 				$this->credentials(),
 				$this->charset(),
-				$this->log()
+				$this->environment()
 			);
 		}
 		return $this->successor->handler($action, $class);
 	}
 
-	private function environment() {
-		return [
-			'environment' => getenv(\Yapay\Enum\Configuration\Environment::ENV)
-		];
-	}
-
 	private function credentials() {
+		$xml = simplexml_load_file(YP_CONFIG);
 		return [
 			'credentials' => [
-				'email' => getenv(\Yapay\Enum\Configuration\Environment::EMAIL),
-				'token' => [
+				'accountToken' => [
 					'environment' => [
-						'production' => getenv(\Yapay\Enum\Configuration\Environment::TOKEN_PRODUCTION),
-						'sandbox' => getenv(\Yapay\Enum\Configuration\Environment::TOKEN_SANDBOX)
+						'production' => Mage::helper('eloom_yapay/config')->getToken(),
+						'sandbox' => Mage::helper('eloom_yapay/config')->getToken()
 					]
 				],
-				'appId' => [
+				'resellerToken' => [
 					'environment' => [
-						'production' => getenv(\Yapay\Enum\Configuration\Environment::APP_ID_PRODUCTION),
-						'sandbox' => getenv(\Yapay\Enum\Configuration\Environment::APP_ID_SANDBOX)
+						'production' => current($xml->account->production->resellerToken),
+						'sandbox' => current($xml->account->sandbox->resellerToken)
 					]
 				],
-				'appKey' => [
+				'consumerKey' => [
 					'environment' => [
-						'production' => getenv(\Yapay\Enum\Configuration\Environment::APP_KEY_PRODUCTION),
-						'sandbox' => getenv(\Yapay\Enum\Configuration\Environment::APP_KEY_SANDBOX)
+						'production' => current($xml->application->production->consumerKey),
+						'sandbox' => current($xml->application->sandbox->consumerKey)
+					]
+				],
+				'consumerSecret' => [
+					'environment' => [
+						'production' => current($xml->application->production->consumerSecret),
+						'sandbox' => current($xml->application->sandbox->consumerSecret)
 					]
 				]
 			]
@@ -61,7 +59,15 @@ class Eloom_Yapay_Resources_Responsibility_Configuration_Environment implements 
 
 	private function charset() {
 		return [
-			'charset' => getenv(\Yapay\Enum\Configuration\Environment::CHARSET)
+			'charset' => current(
+				simplexml_load_file(YP_CONFIG)->charset
+			)
+		];
+	}
+
+	private function environment() {
+		return [
+			'environment' => Mage::helper('eloom_yapay/config')->getEnvironment()
 		];
 	}
 }
