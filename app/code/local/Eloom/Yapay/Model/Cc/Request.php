@@ -30,7 +30,6 @@ class Eloom_Yapay_Model_Cc_Request extends Mage_Core_Model_Abstract {
 		} else {
 			$shippingAddress = $order->getShippingAddress();
 		}
-		$config = Mage::helper('eloom_yapay/config');
 
 		/* Credit Card Payment */
 		$tokenAccount = Eloom_Yapay_Configuration_Configure::getAccountCredentials()->getToken();

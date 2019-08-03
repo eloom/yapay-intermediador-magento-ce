@@ -15,7 +15,7 @@ class Eloom_Yapay_IndexController extends Mage_Core_Controller_Front_Action {
 	}
 
 	public function indexAction() {
-
+		/*
 		$accountCredentials = Eloom_Yapay_Configuration_Configure::getAccountCredentials();
 		$appCredentials = Eloom_Yapay_Configuration_Configure::getApplicationCredentials();
 
@@ -28,6 +28,7 @@ class Eloom_Yapay_IndexController extends Mage_Core_Controller_Front_Action {
 
 		$this->getResponse()->setHeader('Content-type', 'application/json', true);
 		$this->getResponse()->setBody(json_encode($data));
+		*/
 	}
 
 	public function installmentsAction() {

@@ -41,6 +41,23 @@ class Eloom_Yapay_Model_Order extends Mage_Core_Model_Abstract {
       if ($order->getState() == Mage_Sales_Model_Order::STATE_CANCELED) {
         return true;
       }
+      /*
+       * Call Yapay
+       */
+	    $accountCredentials = Eloom_Yapay_Configuration_Configure::getAccountCredentials();
+	    $appCredentials = Eloom_Yapay_Configuration_Configure::getApplicationCredentials();
+
+	    $response = Eloom_Yapay_Services_Authorization_Create::create($accountCredentials, $appCredentials);
+	    $accessToken = Eloom_Yapay_Services_Authorization_Token::getAccessToken($response->getCode(), $appCredentials);
+
+	    $response = Eloom_Yapay_Services_Transactions_Cancel::cancel($accessToken->getAccessToken(), $order->getPayment()->getLastTransId());
+
+			if($response->message != 'success') {
+				// FIXME: enviar notificação pro admin
+				$this->logger->fatal(sprintf("Impossível cancelar pedido %s", $order->getIncrementId()));
+				return;
+			}
+
       $c = trim($comment);
       $order->cancel()
               ->addStatusHistoryComment($c)

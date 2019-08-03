@@ -57,7 +57,7 @@ class Eloom_Yapay_BoletoController extends Mage_Core_Controller_Front_Action {
 	    $order->getPayment()->setCcDebugResponseBody(json_encode($e->getErrors()));
 	    $order->getPayment()->save();
 
-	    Mage::dispatchEvent('eloom_yapay_cancel_transaction', array('order' => $order, 'comment' => 'Falha no Pagamento.'));
+	    Mage::dispatchEvent('eloom_yapay_cancel_order', array('order' => $order, 'comment' => 'Falha no Pagamento.'));
 
 	    Mage::getSingleton('core/session')->addError("<ul><li>" . implode("</li><li>", $e->getErrors()) . "</li></ul>");
 	    $this->_redirect('checkout/onepage/failure', array('_secure' => true));
@@ -68,7 +68,7 @@ class Eloom_Yapay_BoletoController extends Mage_Core_Controller_Front_Action {
 	    $order->getPayment()->setCcDebugResponseBody(json_encode($e->getMessage()));
 	    $order->getPayment()->save();
 
-	    Mage::dispatchEvent('eloom_yapay_cancel_transaction', array('token' => $order, 'transaction' => 'Falha no Pagamento.'));
+	    Mage::dispatchEvent('eloom_yapay_cancel_order', array('token' => $order, 'transaction' => 'Falha no Pagamento.'));
 
 	    Mage::getSingleton('checkout/session')->setErrorMessage("<ul><li>" . implode("</li><li>", array($e->getMessage())) . "</li></ul>");
 	    $this->_redirect('checkout/onepage/failure', array('_secure' => true));

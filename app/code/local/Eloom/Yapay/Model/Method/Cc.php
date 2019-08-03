@@ -26,7 +26,7 @@ class Eloom_Yapay_Model_Method_Cc extends Mage_Payment_Model_Method_Abstract {
 	protected $_canCaptureOnce = false;
 	protected $_canRefund = false;
 	protected $_canRefundInvoicePartial = false;
-	protected $_canVoid = false;
+	protected $_canVoid = true;
 	protected $_canUseInternal = false;
 	protected $_canUseCheckout = true;
 	protected $_canUseForMultishipping = false;
@@ -45,6 +45,7 @@ class Eloom_Yapay_Model_Method_Cc extends Mage_Payment_Model_Method_Abstract {
 	public function getOrderPlaceRedirectUrl() {
 		return Mage::getUrl('eloomyapay/cc/payment', array('_secure' => true));
 	}
+
 
 	/**
 	 * Get instructions text from config
@@ -149,6 +150,9 @@ class Eloom_Yapay_Model_Method_Cc extends Mage_Payment_Model_Method_Abstract {
 	public function validate() {
 		parent::validate();
 
+		/*
+		 * Descomentar essa linha para forçar erros
+		 */
 		//return $this;
 
 		$info = $this->getInfoInstance();
@@ -171,4 +175,5 @@ class Eloom_Yapay_Model_Method_Cc extends Mage_Payment_Model_Method_Abstract {
 
 		return $this;
 	}
+
 }
