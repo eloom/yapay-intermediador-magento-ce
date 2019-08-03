@@ -46,7 +46,7 @@ class Eloom_Yapay_Resources_Builder {
 		}
 		$environment = Eloom_Yapay_Configuration_Configure::getEnvironment();
 		return sprintf(
-			"%s://%s", $protocol, current($xml->path->{$resource}->environment->{$environment})
+			"%s://%s", $protocol, current($xml->path->{$resource}->environment->{$environment->getEnvironment()})
 		);
 	}
 

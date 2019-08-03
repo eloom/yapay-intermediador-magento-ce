@@ -29,7 +29,7 @@ class Eloom_Yapay_Library {
 	 * @throws \Exception
 	 */
 	final public static function initialize() {
-		if(!defined(YP_BASEPATH)) {
+		if(!defined('YP_BASEPATH')) {
 			define('YP_BASEPATH', __DIR__);
 			define('YP_CONFIG_PATH', YP_BASEPATH . "/Configuration/");
 			define('YP_CONFIG', YP_CONFIG_PATH . "Properties/Conf.xml");

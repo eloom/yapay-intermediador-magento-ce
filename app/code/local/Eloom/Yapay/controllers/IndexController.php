@@ -16,7 +16,10 @@ class Eloom_Yapay_IndexController extends Mage_Core_Controller_Front_Action {
 
 	public function indexAction() {
 
-		Eloom_Yapay_Configuration_Configure::getApplicationCredentials();
+		$accountCredentials = Eloom_Yapay_Configuration_Configure::getAccountCredentials();
+		$appCredentials = Eloom_Yapay_Configuration_Configure::getApplicationCredentials();
+
+		$response = Eloom_Yapay_Services_Authorization_Create::create($accountCredentials, $appCredentials);
 
 		return;
 

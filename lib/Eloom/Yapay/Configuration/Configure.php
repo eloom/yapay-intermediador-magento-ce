@@ -71,7 +71,7 @@ class Eloom_Yapay_Configuration_Configure {
 		if (!isset(self::$environment)) {
 			Eloom_Yapay_Library::initialize();
 			$configuration = Eloom_Yapay_Resources_Responsibility::configuration();
-			self::setEnvironment($configuration ['$environment']);
+			self::setEnvironment($configuration ['environment']);
 		}
 		return self::$environment;
 	}

@@ -16,6 +16,7 @@ class Eloom_Yapay_Resources_Connection_Data {
 	use Eloom_Yapay_Resources_Connection_Base_Session;
 	use Eloom_Yapay_Resources_Connection_Base_Transaction_Cancel;
 	use Eloom_Yapay_Resources_Connection_Base_Transaction_Search;
+	use Eloom_Yapay_Resources_Connection_Base_Authorization_Create;
 
 	/**
 	 * Data constructor.
