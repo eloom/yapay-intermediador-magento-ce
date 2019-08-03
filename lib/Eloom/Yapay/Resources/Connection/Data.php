@@ -17,10 +17,11 @@ class Eloom_Yapay_Resources_Connection_Data {
 	use Eloom_Yapay_Resources_Connection_Base_Transaction_Cancel;
 	use Eloom_Yapay_Resources_Connection_Base_Transaction_Search;
 	use Eloom_Yapay_Resources_Connection_Base_Authorization_Create;
+	use Eloom_Yapay_Resources_Connection_Base_Authorization_Token;
 
 	/**
 	 * Data constructor.
-	 * @param Credentials $credentials
+	 * @param Eloom_Yapay_Domains_Account_Credentials $credentials
 	 */
 	public function __construct(Eloom_Yapay_Domains_Account_Credentials $credentials) {
 		$this->setCredentials($credentials);

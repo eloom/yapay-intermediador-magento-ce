@@ -20,13 +20,9 @@ class Eloom_Yapay_IndexController extends Mage_Core_Controller_Front_Action {
 		$appCredentials = Eloom_Yapay_Configuration_Configure::getApplicationCredentials();
 
 		$response = Eloom_Yapay_Services_Authorization_Create::create($accountCredentials, $appCredentials);
+		$accessToken = Eloom_Yapay_Services_Authorization_Token::getAccessToken($response->getCode(), $appCredentials);
 
-		return;
-
-		$credentials = new Eloom_Yapay_Domains_AccountCredentials();
-		$credentials->setToken('1f5685b5d4a651d');
-
-		$response = Eloom_Yapay_Services_Transactions_Cancel::cancel($credentials, '19479579');
+		$response = Eloom_Yapay_Services_Transactions_Cancel::cancel($accessToken->getAccessToken(), '19479579');
 
 		$data = array('response' => $response);
 

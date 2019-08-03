@@ -8,17 +8,17 @@
 class Eloom_Yapay_Services_Transactions_Cancel {
 
 	/**
-	 * @param Eloom_Yapay_Domains_AccountCredentials $credentials
+	 * @param string $accessToken
 	 * @param $transactionId
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public static function cancel(Eloom_Yapay_Domains_AccountCredentials $credentials, $transactionId) {
+	public static function cancel($accessToken, $transactionId) {
 		try {
-			$connection = new Eloom_Yapay_Resources_Connection_Data($credentials);
+			$connection = new Eloom_Yapay_Resources_Connection_Data(new Eloom_Yapay_Domains_AccountCredentials());
 			$http = new Eloom_Yapay_Resources_Rest();
 
-			$data = array('access_token' => $credentials->getToken(), 'transaction_id' => $transactionId, 'reason_cancellation_id' => 6);
+			$data = array('access_token' => $accessToken, 'transaction_id' => $transactionId, 'reason_cancellation_id' => 6);
 			$http->patch(self::request($connection), $data);
 
 			$response = Eloom_Yapay_Resources_Responsibility::http($http, new Eloom_Yapay_Parsers_Transaction_Cancel_Request());
