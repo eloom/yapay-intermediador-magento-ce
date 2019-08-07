@@ -29,6 +29,7 @@ class Eloom_Yapay_Domains_Requests_DirectPayment_CreditCard_Request implements E
 		Eloom_Yapay_Domains_Requests_Redirect::setUrl as setRedirectUrl;
 	}
 	use Eloom_Yapay_Domains_Requests_DirectPayment_Token;
+	use Eloom_Yapay_Domains_Requests_DirectPayment_ResellerToken;
 	use Eloom_Yapay_Domains_Requests_DirectPayment_FingerPrint;
 	use Eloom_Yapay_Domains_Requests_DirectPayment_Payment;
 }

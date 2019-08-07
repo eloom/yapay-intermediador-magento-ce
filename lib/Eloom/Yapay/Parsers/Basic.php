@@ -12,7 +12,7 @@ trait Eloom_Yapay_Parsers_Basic {
 	 * @return array
 	 */
 	public static function getData(Eloom_Yapay_Domains_Requests_Requests $request, $properties) {
-		return array($properties::TOKEN => $request->getToken(), $properties::FINGER_PRINT => $request->getFingerPrint());
+		return array($properties::TOKEN => $request->getToken(), $properties::RESELLER_TOKEN => $request->getResellerToken(), $properties::FINGER_PRINT => $request->getFingerPrint());
 	}
 
 }

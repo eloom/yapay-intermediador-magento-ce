@@ -19,6 +19,8 @@ class Eloom_Yapay_Enum_Properties_BackwardCompatibility {
 
 	const TOKEN = 'token_account';
 
+	const RESELLER_TOKEN = 'reseller_token';
+
 	const FINGER_PRINT = 'finger_print';
 
 	/**

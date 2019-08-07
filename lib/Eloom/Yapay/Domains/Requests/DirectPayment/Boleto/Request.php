@@ -27,6 +27,7 @@ class Eloom_Yapay_Domains_Requests_DirectPayment_Boleto_Request implements Eloom
 	}
 
 	use Eloom_Yapay_Domains_Requests_DirectPayment_Token;
+	use Eloom_Yapay_Domains_Requests_DirectPayment_ResellerToken;
 	use Eloom_Yapay_Domains_Requests_DirectPayment_FingerPrint;
 	use Eloom_Yapay_Domains_Requests_DirectPayment_Payment;
 }
