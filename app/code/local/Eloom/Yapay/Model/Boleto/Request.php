@@ -21,7 +21,7 @@ class Eloom_Yapay_Model_Boleto_Request extends Mage_Core_Model_Abstract {
     } else {
       $shippingAddress = $order->getShippingAddress();
     }
-
+	  $config = Mage::helper('eloom_yapay/config');
 	  $tokenAccount = Eloom_Yapay_Configuration_Configure::getAccountCredentials()->getToken();
 	  $boleto = new Eloom_Yapay_Domains_Requests_DirectPayment_Boleto();
 	  $boleto->setToken($tokenAccount);
@@ -71,7 +71,7 @@ class Eloom_Yapay_Model_Boleto_Request extends Mage_Core_Model_Abstract {
 		  }
 	  }
     /* ------- Expiração Boleto */
-    $expiration = new DateTime('now +' . $config->getBilletExpiration() . ' day');
+    //$expiration = new DateTime('now +' . $config->getBilletExpiration() . ' day');
 
 	  /* ------- Customer ------- */
 	  $customerName = trim($order->getCustomerFirstname()) . ' ' . ($order->getCustomerMiddlename() != null ? trim($order->getCustomerMiddlename()) . ' ' : '') . trim($order->getCustomerLastname());
@@ -118,7 +118,6 @@ class Eloom_Yapay_Model_Boleto_Request extends Mage_Core_Model_Abstract {
 
 	  // calcular data para cancelar boleto
 	  $orderCreatedAt = $order->getCreatedAt();
-	  $config = Mage::helper('eloom_yapay/config');
 	  $dayOfWeek = date("w", strtotime($orderCreatedAt));
 	  $incrementDays = null;
 
